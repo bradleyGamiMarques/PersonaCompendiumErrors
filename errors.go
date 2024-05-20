@@ -66,15 +66,18 @@ func JSONResponse(errResp ErrorResponse) (events.APIGatewayProxyResponse, error)
 		}
 		genericErrorJSON, _ := json.Marshal(genericError)
 		return events.APIGatewayProxyResponse{
-			StatusCode: 500,
-			Headers:    map[string]string{"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"},
-			Body:       string(genericErrorJSON),
+			StatusCode:        500,
+			Headers:           map[string]string{"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"},
+			MultiValueHeaders: nil,
+			Body:              string(genericErrorJSON),
+			IsBase64Encoded:   false,
 		}, nil
 	}
 	return events.APIGatewayProxyResponse{
-		StatusCode:      errResp.StatusCode,
-		Headers:         map[string]string{"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"},
-		Body:            errorResponseJSON,
-		IsBase64Encoded: false,
+		StatusCode:        errResp.StatusCode,
+		Headers:           map[string]string{"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"},
+		MultiValueHeaders: nil,
+		Body:              errorResponseJSON,
+		IsBase64Encoded:   false,
 	}, nil
 }
